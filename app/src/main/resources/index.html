@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Kotlin OpenAI Proxy</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 2rem auto; line-height: 1.6; }
+        code, pre { background: #f4f4f4; padding: 0.5em; display: block; white-space: pre-wrap; }
+        h1, h2 { color: #333; }
+    </style>
+</head>
+<body>
+<h1>🔁 Kotlin OpenAI Proxy Server</h1>
+<p>This server acts as a secure proxy between your frontend app and the OpenAI <code>/v1/chat/completions</code> endpoint.</p>
+
+<h2>✅ What It Does</h2>
+<ul>
+    <li>Forwards chat requests to OpenAI securely</li>
+    <li>Hides your API key from the frontend</li>
+    <li>Supports both standard and <strong>streaming</strong> completions</li>
+    <li>Returns exact OpenAI-compatible responses</li>
+</ul>
+
+<h2>📡 How to Use</h2>
+<h3>1. Send a non-streaming request</h3>
+<pre><code>
+curl -X POST http://localhost:8080/ask \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-4o",
+    "messages": [
+      { "role": "user", "content": "Say hello!" }
+    ]
+  }'
+  </code></pre>
+
+<h3>2. Send a streaming request</h3>
+<pre><code>
+curl -N http://localhost:8080/ask \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '{
+    "model": "gpt-4o",
+    "stream": true,
+    "messages": [
+      { "role": "user", "content": "Tell me a joke." }
+    ]
+  }'
+  </code></pre>
+
+<h2>⚙️ Configuration</h2>
+<p>Set your OpenAI API key in a <code>.env</code> file:</p>
+<pre><code>
+OPEN_AI_KEY=sk-...
+  </code></pre>
+
+<h2>📁 Endpoints</h2>
+<ul>
+    <li><code>GET /</code> — Returns a welcome message</li>
+    <li><code>POST /ask</code> — Forwards your chat completion request to OpenAI</li>
+</ul>
+
+<h2>💡 Notes</h2>
+<ul>
+    <li>Streaming is fully supported using Server-Sent Events (SSE)</li>
+    <li>This proxy can be deployed in production to secure frontend apps using OpenAI</li>
+</ul>
+
+<p style="margin-top:2rem; font-size: 0.9em;">Made with Kotlin ❤️</p>
+</body>
+</html>
